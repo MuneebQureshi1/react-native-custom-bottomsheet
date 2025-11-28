@@ -1,13 +1,9 @@
 import React, { useEffect } from "react";
 import { Dimensions, Modal, Pressable, View, ViewStyle, StyleSheet } from "react-native";
-import {
-  PanGestureHandler,
-  PanGestureHandlerGestureEvent,
-} from "react-native-gesture-handler";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
   Easing,
   runOnJS,
-  useAnimatedGestureHandler,
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
@@ -118,23 +114,22 @@ export const CustomBottomSheet = ({
     }
   });
 
-  const gestureHandler = useAnimatedGestureHandler<
-    PanGestureHandlerGestureEvent,
-    { startHeight: number }
-  >({
-    onStart: (_, ctx) => {
-      ctx.startHeight = animatedHeight.value;
+  const startHeight = useSharedValue(0);
+
+  const panGesture = Gesture.Pan()
+    .onStart(() => {
+      startHeight.value = animatedHeight.value;
       isDragging.value = true;
-    },
-    onActive: (event, ctx) => {
+    })
+    .onUpdate((event) => {
       if (disableClose) return;
 
-      let newHeight = ctx.startHeight - event.translationY;
+      let newHeight = startHeight.value - event.translationY;
       newHeight = Math.max(minHeight, Math.min(maxHeight, newHeight));
 
       animatedHeight.value = newHeight;
-    },
-    onEnd: () => {
+    })
+    .onEnd(() => {
       isDragging.value = false;
       if (disableClose) {
         animatedHeight.value = withSpring(height, {
@@ -161,7 +156,7 @@ export const CustomBottomSheet = ({
             duration: 300,
             easing: Easing.out(Easing.quad),
           },
-          (finished) => {
+          (finished?: boolean) => {
             if (finished) {
               runOnJS(onClose)();
             }
@@ -173,8 +168,7 @@ export const CustomBottomSheet = ({
           stiffness: 100,
         });
       }
-    },
-  });
+    });
 
   const sheetStyle = useAnimatedStyle(() => ({
     height: animatedHeight.value,
@@ -195,7 +189,7 @@ export const CustomBottomSheet = ({
           duration: 300,
           easing: Easing.out(Easing.quad),
         },
-        (finished) => {
+        (finished?: boolean) => {
           if (finished) {
             runOnJS(onClose)();
           }
@@ -226,7 +220,7 @@ export const CustomBottomSheet = ({
             containerStyle,
           ]}
         >
-          <PanGestureHandler onGestureEvent={gestureHandler}>
+          <GestureDetector gesture={panGesture}>
             <Animated.View>
               <Animated.View
                 style={[
@@ -235,7 +229,7 @@ export const CustomBottomSheet = ({
                 ]}
               />
             </Animated.View>
-          </PanGestureHandler>
+          </GestureDetector>
 
           {children}
         </Animated.View>
@@ -257,13 +251,13 @@ export const CustomBottomSheet = ({
         {topView && topView}
         <View style={defaultStyles.mb10} />
         <View style={[defaultStyles.sheetContent, containerStyle]}>
-          <PanGestureHandler onGestureEvent={gestureHandler}>
+          <GestureDetector gesture={panGesture}>
             <Animated.View>
               <Animated.View
                 style={[defaultStyles.handleBar, handleBarStyle]}
               />
             </Animated.View>
-          </PanGestureHandler>
+          </GestureDetector>
 
           {children}
         </View>

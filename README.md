@@ -5,13 +5,13 @@ A customizable bottom sheet component for React Native with smooth animations, g
 ## Installation
 
 ```bash
-npm install react-native-custom-bottomsheet
+npm install @muneebqureshi/react-native-custom-bottomsheet
 ```
 
 or
 
 ```bash
-yarn add react-native-custom-bottomsheet
+yarn add @muneebqureshi/react-native-custom-bottomsheet
 ```
 
 ### Required Peer Dependencies
@@ -31,7 +31,7 @@ npm install react-native-reanimated react-native-gesture-handler
 ```tsx
 import React, { useState } from 'react';
 import { View, Text, Button } from 'react-native';
-import { CustomBottomSheet } from 'react-native-custom-bottomsheet';
+import { CustomBottomSheet } from '@muneebqureshi/react-native-custom-bottomsheet';
 
 const App = () => {
   const [visible, setVisible] = useState(false);
@@ -61,7 +61,7 @@ export default App;
 ```tsx
 import React, { useState } from 'react';
 import { View, Text, Button, Dimensions } from 'react-native';
-import { CustomBottomSheet } from 'react-native-custom-bottomsheet';
+import { CustomBottomSheet } from '@muneebqureshi/react-native-custom-bottomsheet';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
@@ -107,7 +107,7 @@ export default App;
 ```tsx
 import React from 'react';
 import { View, Text } from 'react-native';
-import { CustomBottomSheet } from 'react-native-custom-bottomsheet';
+import { CustomBottomSheet } from '@muneebqureshi/react-native-custom-bottomsheet';
 
 const App = () => {
   return (

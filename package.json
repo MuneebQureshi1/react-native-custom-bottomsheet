@@ -1,5 +1,5 @@
 {
-  "name": "react-native-custom-bottomsheet",
+  "name": "@muneebqureshi/react-native-custom-bottomsheet",
   "version": "1.0.0",
   "description": "A customizable bottom sheet component for React Native",
   "main": "lib/index.js",
@@ -21,17 +21,19 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git+https://github.com/MuneebQureshi1/react-native-custom-bottomsheet.git"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
     "react-native": ">=0.60.0",
-    "react-native-reanimated": ">=2.0.0",
-    "react-native-gesture-handler": ">=2.0.0"
+    "react-native-gesture-handler": ">=2.0.0",
+    "react-native-reanimated": ">=2.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.0",
     "@types/react-native": "^0.72.0",
+    "react-native-gesture-handler": "^2.29.1",
+    "react-native-reanimated": "^4.1.5",
     "typescript": "^5.0.0"
   },
   "files": [
@@ -40,4 +42,3 @@
     "README.md"
   ]
 }
-
